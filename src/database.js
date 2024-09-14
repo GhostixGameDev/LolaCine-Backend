@@ -13,14 +13,14 @@ db.connect(function(error) {
   const setupQueries = [
     `CREATE TABLE IF NOT EXISTS \`votos\` (
       ID tinyint AUTO_INCREMENT PRIMARY KEY,
-      name tinytext NOT NULL DEFAULT 'Propuesta',
-      logo tinytext NOT NULL DEFAULT './assets/propuestas/',
+      name tinytext NOT NULL,
+      logo tinytext NOT NULL,
       votes smallint UNSIGNED NOT NULL DEFAULT 0,
-      \`group\` smallint UNSIGNED NOT NULL DEFAULT 0
+      group smallint UNSIGNED NOT NULL DEFAULT 0
     )`,
     `CREATE TABLE IF NOT EXISTS \`users\` (
       ID tinyint AUTO_INCREMENT PRIMARY KEY,
-      UID text NOT NULL DEFAULT '',
+      UID text NOT NULL,
       is_admin BOOLEAN NOT NULL DEFAULT FALSE
     )`,
     `CREATE TABLE IF NOT EXISTS \`state\` (
