@@ -13,7 +13,7 @@ dotenv.config();
 const app = express();
 const port = 3304;
 app.use(express.json());
-const allowedOrigins = ['http://localhost:5173', 'https://lolacine-3d94c.web.app/', "https://lolacine.ghostix.com.ar"];
+const allowedOrigins = ['http://localhost:5173', 'https://lolacine-3d94c.web.app/', "https://lolacine.ghostix.com.ar", "https://lolacine-3d94c.web.app", "https://lolacine-3d94c.web.app/admin"];
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
