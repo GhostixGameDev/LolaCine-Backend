@@ -13,7 +13,8 @@ db.connect(function(error) {
   const setupQueries = [
     `CREATE TABLE IF NOT EXISTS \`votos\` (
       ID tinyint AUTO_INCREMENT PRIMARY KEY,
-      name tinytext NOT NULL,
+      school tinytext NOT NULL,
+      name text NOT NULL,
       logo tinytext NOT NULL,
       votes smallint UNSIGNED NOT NULL DEFAULT 0,
       \`group\` smallint UNSIGNED NOT NULL DEFAULT 0
