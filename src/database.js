@@ -11,6 +11,7 @@ db.connect(function(error) {
   console.log("Connected!");
   // Create tables if not exist
   const setupQueries = [
+    `DROP TABLE votos`,
     `CREATE TABLE IF NOT EXISTS \`votos\` (
       ID tinyint AUTO_INCREMENT PRIMARY KEY,
       school tinytext NOT NULL,
