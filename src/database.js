@@ -16,7 +16,7 @@ db.connect(function(error) {
       name tinytext NOT NULL,
       logo tinytext NOT NULL,
       votes smallint UNSIGNED NOT NULL DEFAULT 0,
-      group smallint UNSIGNED NOT NULL DEFAULT 0
+      \`group\` smallint UNSIGNED NOT NULL DEFAULT 0
     )`,
     `CREATE TABLE IF NOT EXISTS \`users\` (
       ID tinyint AUTO_INCREMENT PRIMARY KEY,
