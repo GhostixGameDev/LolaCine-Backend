@@ -5,21 +5,21 @@ import dotenv from "dotenv";
 dotenv.config();
 //Create connection.
 const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
+    host: process.env.SQL_HOST,
+    user: process.env.SQL_USER,
+    password: process.env.SQL_PASSWORD,
   });
   
   db.connect(function(error) {
     if(error) throw error;
     console.log("Connected!");
     // Create the database if not exists.
-    db.query("CREATE DATABASE IF NOT EXISTS lolacine", function (error) {
+    db.query("CREATE DATABASE IF NOT EXISTS " + process.env.SQL_NAME , function (error) {
       if (error) throw error;
       console.log("Database created or exists already");
   
       // Select the database
-      db.changeUser({ database: "lolacine" }, function (error) {
+      db.changeUser({ database: process.env.SQL_NAME }, function (error) {
         if (error) throw error;
         console.log("Switched to lolacine database");
   
