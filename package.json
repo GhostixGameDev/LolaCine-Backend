@@ -17,6 +17,7 @@
     "express": "^4.21.0",
     "firebase-admin": "^12.4.0",
     "lolacine-backend": "file:",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "mysql2": "^3.11.2"
   }
 }
