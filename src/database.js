@@ -19,7 +19,7 @@ db.connect(function(error) {
       votes smallint UNSIGNED NOT NULL DEFAULT 0,
       \`group\` smallint UNSIGNED NOT NULL DEFAULT 0
     )`,
-    `CREATE TABLE IF NOT EXISTS \`users2\` (
+    `CREATE TABLE IF NOT EXISTS \`users\` (
       ID int AUTO_INCREMENT PRIMARY KEY,
       UID text NOT NULL,
       is_admin BOOLEAN NOT NULL DEFAULT FALSE
@@ -37,44 +37,6 @@ db.connect(function(error) {
       console.log("Table or data setup successfully");
     });
   });
-
-
-  //courtesy of chatGPT
-    // Step 1: Copy data from users to users2
-    db.query("INSERT INTO users2 (ID, UID, is_admin) SELECT ID, UID, is_admin FROM users", function(error) {
-      if (error) throw error;
-      console.log("Data copied from users to users2");
-  
-      // Step 2: Drop the users table
-      db.query("DROP TABLE users", function(error) {
-        if (error) throw error;
-        console.log("Users table dropped");
-  
-        // Step 3: Recreate the users table with the new structure
-        const createUsersQuery = `
-          CREATE TABLE users (
-            ID int AUTO_INCREMENT PRIMARY KEY,
-            UID text NOT NULL,
-            is_admin BOOLEAN NOT NULL DEFAULT FALSE
-          )`;
-        db.query(createUsersQuery, function(error) {
-          if (error) throw error;
-          console.log("Users table recreated with new structure");
-  
-          // Step 4: Copy data back from users2 to users
-          db.query("INSERT INTO users (ID, UID, is_admin) SELECT ID, UID, is_admin FROM users2", function(error) {
-            if (error) throw error;
-            console.log("Data copied back from users2 to users");
-  
-            // Step 5: Drop users2 table
-            db.query("DROP TABLE users2", function(error) {
-              if (error) throw error;
-              console.log("Users2 table dropped");
-            });
-          });
-        });
-      });
-    });
   //Make myself admin. (Rudimentary, but there is no time.)
   db.query("SELECT * FROM users WHERE UID = ?", [process.env.ADMIN_UID], (error, result) => {
     if(error) throw error;
