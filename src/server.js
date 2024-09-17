@@ -143,20 +143,20 @@ app.post('/votes/:id', verifyToken, (request, response) => {
           const newVotes = result[0].votes + 1;
           db.query("UPDATE votos SET votes = ? WHERE ID = ?", [newVotes, id], (updateError) => {
             if (updateError) return response.status(500).json({ error: updateError.message });
-            //Primary schools (Group 0) dont have security measures.
-            if(group != 0){
-              // Insert the user vote in users table
-              db.query("INSERT INTO users (UID) VALUES (?)", [userId], (insertError) => {
-                if (insertError) return response.status(500).json({ error: insertError.message });
-                //Return the response.
-                console.log(`Vote recorded for proposal ${id}. Updated votes to ${newVotes}. User ID: ${userId}`);
-                return response.json({ message: `Vote recorded for proposal ${id}. Updated votes to ${newVotes}. User ID: ${userId}` });
-              });
-            }else{
+            //Primary schools (Group 0) dont have security measures. : OUTDATED
+            //if(group != 0){
+            // Insert the user vote in users table
+            db.query("INSERT INTO users (UID) VALUES (?)", [userId], (insertError) => {
+              if (insertError) return response.status(500).json({ error: insertError.message });
+              //Return the response.
+              console.log(`Vote recorded for proposal ${id}. Updated votes to ${newVotes}. User ID: ${userId}`);
+              return response.json({ message: `Vote recorded for proposal ${id}. Updated votes to ${newVotes}. User ID: ${userId}` });
+            });
+           /*  }else{
               //Return the response.
               console.log(`Vote recorded for proposal ${id}. Updated votes to ${newVotes}. User ID: ${userId}`)
               return response.json({ message: `Vote recorded for proposal ${id}. Updated votes to ${newVotes}. User ID: ${userId}` });
-            }
+            } */
           });
         }else{
           console.log("No entries found with the given ID, sending 404 response");
