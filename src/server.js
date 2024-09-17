@@ -124,12 +124,14 @@ app.post('/votes/:id', verifyToken, (request, response) => {
     if(error) return response.status(500).json({ error: error.message });
     if(result[0].enabled == 0) return response.status(403).json({ error: "La votación esta deshabilitada, solo puedes votar durante el evento." })
     // Check if user has already voted
+    console.log("Votes are enabled? Yes.");
     db.query("SELECT * FROM users WHERE UID = ?", [userId], (error, result) => { 
       if (error) return response.status(500).json({ error: error.message });
       
       
       if (result.length > 0 && result[0].UID != process.env.VOTE_MASTER) {
         // User has already voted, do  not take into account if is the vote master account.
+        console.log("Vote request refused. User already voted.");
         return response.status(403).json({ error: "ERROR: User tried to vote but has already voted. Is this correct?" });
         
       }
@@ -146,10 +148,15 @@ app.post('/votes/:id', verifyToken, (request, response) => {
               // Insert the user vote in users table
               db.query("INSERT INTO users (UID) VALUES (?)", [userId], (insertError) => {
                 if (insertError) return response.status(500).json({ error: insertError.message });
+                //Return the response.
+                console.log(`Vote recorded for proposal ${id}. Updated votes to ${newVotes}. User ID: ${userId}`);
+                return response.json({ message: `Vote recorded for proposal ${id}. Updated votes to ${newVotes}. User ID: ${userId}` });
               });
+            }else{
+              //Return the response.
+              console.log(`Vote recorded for proposal ${id}. Updated votes to ${newVotes}. User ID: ${userId}`)
+              return response.json({ message: `Vote recorded for proposal ${id}. Updated votes to ${newVotes}. User ID: ${userId}` });
             }
-            //Return the response.
-            return response.json({ message: `Vote recorded for proposal ${id}. Updated votes to ${newVotes}. User ID: ${userId}` });
           });
         }else{
           console.log("No entries found with the given ID, sending 404 response");
@@ -164,6 +171,7 @@ app.post('/votes/:id', verifyToken, (request, response) => {
 app.get('/proposals', verifyToken, (request, response) => {
   db.query("SELECT * FROM votos", (error, result) => {
     if (error) return response.status(500).json({ error: error.message });
+    console.log("Website requested proposal list...")
     response.json(result);
   });
 });
